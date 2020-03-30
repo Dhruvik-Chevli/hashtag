@@ -9,18 +9,21 @@
 import UIKit
 
 class TableViewController: UITableViewController {
+    
+    var users : [userInfo] = []
 
     fileprivate func setUpTableView(){
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(UserCell.self, forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = 150
         tableView.allowsSelection = false
-        
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        users = fetchData()
         setUpTableView()
     }
 
@@ -31,75 +34,27 @@ class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return users.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! UserCell
         cell.layer.cornerRadius = 15
-        let t: Int=indexPath.row
-        if(t%2==0)
-        {
-            cell.backgroundColor = .systemPink
-        }
-        else
-        {
-            cell.backgroundColor = .systemTeal
-        }
+        let user = users[indexPath.row]
+        cell.set(res : user)
         return cell
     }
-    
-//    let hi = UILabel()
-//    hi.text = "Hey, This is a cell"
-//    cell.addSubview(hi)
-//    hi.translatesAutoresizingMaskIntoConstraints = false
-//    hi.centerXAnchor.constraint(equalTo: cell.centerXAnchor, constant: 0).isActive = true
-//    hi.centerYAnchor.constraint(equalTo: cell.centerYAnchor, constant: 0).isActive = true
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+
+extension TableViewController {
+    
+    func fetchData() -> [userInfo] {
+        let info1 = userInfo(id: 1, name: "Dhruvik", username: "Syndicate", website: "Dhruvik.com")
+        let info2 = userInfo(id: 2, name: "Nitigya", username: "Itsnitigya", website: "Nitigya.com")
+        return [info1,info2]
+    }
+    
+}
+
