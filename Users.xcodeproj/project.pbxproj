@@ -16,6 +16,7 @@
 		A8527958242F60D000D45223 /* UsersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8527957242F60D000D45223 /* UsersTests.swift */; };
 		A8527963242F60D000D45223 /* UsersUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8527962242F60D000D45223 /* UsersUITests.swift */; };
 		A8527973242F6E8F00D45223 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8527972242F6E8F00D45223 /* TableViewController.swift */; };
+		A875DF692433B43200D70B38 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A875DF682433B43200D70B38 /* Networking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		A8527962242F60D000D45223 /* UsersUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersUITests.swift; sourceTree = "<group>"; };
 		A8527964242F60D000D45223 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8527972242F6E8F00D45223 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		A875DF682433B43200D70B38 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				A8527940242F60CF00D45223 /* AppDelegate.swift */,
 				A8527972242F6E8F00D45223 /* TableViewController.swift */,
 				8BB1F8AE243208AC0091D5B0 /* UserCell.swift */,
+				A875DF682433B43200D70B38 /* Networking.swift */,
 				8BB1F8AC2432036F0091D5B0 /* Users.swift */,
 				A8527942242F60CF00D45223 /* SceneDelegate.swift */,
 				A8527949242F60D000D45223 /* Assets.xcassets */,
@@ -264,6 +267,7 @@
 				A8527941242F60CF00D45223 /* AppDelegate.swift in Sources */,
 				8BB1F8AF243208AC0091D5B0 /* UserCell.swift in Sources */,
 				8BB1F8AD2432036F0091D5B0 /* Users.swift in Sources */,
+				A875DF692433B43200D70B38 /* Networking.swift in Sources */,
 				A8527943242F60CF00D45223 /* SceneDelegate.swift in Sources */,
 				A8527973242F6E8F00D45223 /* TableViewController.swift in Sources */,
 			);

@@ -21,7 +21,7 @@ class UserCell : UITableViewCell {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 16
-        view.backgroundColor = UIColor(white: 0.5 , alpha: 0.2)
+        view.backgroundColor = UIColor.secondarySystemBackground
         view.clipsToBounds = true
         return view
     }()
@@ -37,7 +37,7 @@ class UserCell : UITableViewCell {
         let name=UILabel()
         setUpLabel(name)
         name.font = UIFont.systemFont(ofSize: 20)
-        name.textColor = .systemBlue
+        name.textColor = UIColor.label
         return name
     }()
 
@@ -57,12 +57,11 @@ class UserCell : UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style,reuseIdentifier: reuseIdentifier)
-    
+        addSubview(backgroundCard)
         addSubview(username)
         addSubview(name)
         addSubview(websiteImage)
         addSubview(website)
-        addSubview(backgroundCard)
         setLabelConstraints()
     }
     
@@ -113,7 +112,7 @@ class UserCell : UITableViewCell {
         website.trailingAnchor.constraint(equalTo: backgroundCard.trailingAnchor, constant: -10).isActive = true
     }
     
-    func set(res:userInfo) {
+    func set(res:User) {
         username.text = String(res.username)
         name.text = String(res.name)
         websiteImage.image = UIImage(systemName: "globe")

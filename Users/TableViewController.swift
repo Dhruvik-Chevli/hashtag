@@ -10,7 +10,13 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    var users : [userInfo] = []
+    var users = [User](){
+        didSet{
+            DispatchQueue.main.async{
+                self.tableView.reloadData()
+            }
+        }
+    }
 
     fileprivate func setUpTableView(){
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -23,7 +29,7 @@ class TableViewController: UITableViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        users = fetchData()
+        fetchData()
         setUpTableView()
     }
 
@@ -50,11 +56,15 @@ class TableViewController: UITableViewController {
 
 extension TableViewController {
     
-    func fetchData() -> [userInfo] {
-        let info1 = userInfo(id: 1, name: "Dhruvik", username: "Syndicate", website: "Dhruvik.com")
-        let info2 = userInfo(id: 2, name: "Nitigya", username: "Itsnitigya", website: "Nitigya.com")
-        return [info1,info2]
+    func fetchData(){
+        Networking.sharedInstance.getUsers{[weak self] result in
+            switch result{
+            case .failure(let error):
+                print(error)
+            case .success(let usersRes):
+                self?.users = usersRes
+            }
+        }
     }
-    
 }
 
