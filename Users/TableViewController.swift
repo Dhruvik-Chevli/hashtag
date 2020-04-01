@@ -20,6 +20,7 @@ class TableViewController: UITableViewController {
 
     fileprivate func setUpTableView(){
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.title = "Users"
         tableView.register(UserCell.self, forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
         tableView.delegate = self
