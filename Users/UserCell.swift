@@ -9,12 +9,6 @@
 import UIKit
 
 
-fileprivate func setUpLabel(_ label: UILabel) {
-    label.numberOfLines = 1
-    label.adjustsFontSizeToFitWidth = true
-    label.translatesAutoresizingMaskIntoConstraints = false
-}
-
 class UserCell : UITableViewCell {
     
     var backgroundCard: UIView = {
@@ -27,15 +21,15 @@ class UserCell : UITableViewCell {
     }()
 
     var username: UILabel = {
-       let username=UILabel()
-        setUpLabel(username)
+       let username = UILabel()
+        username.translatesAutoresizingMaskIntoConstraints = false
         username.font = UIFont.boldSystemFont(ofSize: 25)
         return username
     }()
     
     var name: UILabel = {
-        let name=UILabel()
-        setUpLabel(name)
+        let name = UILabel()
+        name.translatesAutoresizingMaskIntoConstraints = false
         name.font = UIFont.systemFont(ofSize: 20)
         name.textColor = UIColor.label
         return name
@@ -43,7 +37,7 @@ class UserCell : UITableViewCell {
 
     var website : UILabel = {
         let website = UILabel()
-        setUpLabel(website)
+        website.translatesAutoresizingMaskIntoConstraints = false
         website.font = UIFont.systemFont(ofSize: 20)
         return website
     }()
@@ -88,14 +82,12 @@ class UserCell : UITableViewCell {
         username.topAnchor.constraint(equalTo: backgroundCard.topAnchor, constant: 14).isActive = true
         username.heightAnchor.constraint(equalToConstant: 25).isActive  = true
         username.leadingAnchor.constraint(equalTo: backgroundCard.leadingAnchor, constant: 30).isActive = true
-        username.widthAnchor.constraint(equalTo: widthAnchor, constant: -10).isActive = true
     }
     
     fileprivate func nameConstraints() {
         name.topAnchor.constraint(equalTo: username.bottomAnchor , constant:10).isActive = true
         name.heightAnchor.constraint(equalToConstant: 25).isActive = true
         name.leadingAnchor.constraint(equalTo: backgroundCard.leadingAnchor, constant: 30).isActive = true
-        name.widthAnchor.constraint(equalTo: widthAnchor, constant: -10).isActive = true
     }
 
     
