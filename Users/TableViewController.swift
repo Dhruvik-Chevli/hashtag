@@ -27,7 +27,8 @@ class TableViewController: UITableViewController {
     
     @objc func goToSecondScreen(){
         let sampleScreen = SampleScreen()
-        self.navigationController?.pushViewController(sampleScreen, animated: true)
+        sampleScreen.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(sampleScreen, animated: true)
     }
 
     fileprivate func setUpTableView(){
@@ -38,6 +39,7 @@ class TableViewController: UITableViewController {
         tableView.register(UserCell.self, forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundColor = UIColor.systemGroupedBackground
         tableView.rowHeight = 150
         tableView.allowsSelection = false
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
