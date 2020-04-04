@@ -18,16 +18,8 @@ class TableViewController: UITableViewController {
         }
     }
     
-    var nextButton : UIBarButtonItem = {
-        let button  = UIBarButtonItem()
-        button.title = "Next"
-        button.action = #selector(goToSecondScreen)
-        return button
-    }()
-    
     @objc func goToSecondScreen(){
         let sampleScreen = SampleScreen()
-        sampleScreen.modalPresentationStyle = .fullScreen
         self.navigationController?.present(sampleScreen, animated: true)
     }
 
