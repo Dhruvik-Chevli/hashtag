@@ -20,7 +20,9 @@ class TableViewController: UITableViewController {
     
     @objc func goToSecondScreen(){
         let sampleScreen = SampleScreen()
+        //sampleScreen.view.layoutIfNeeded()
         self.navigationController?.present(sampleScreen, animated: true)
+        view.snapshotView(afterScreenUpdates: true)
     }
 
     fileprivate func setUpTableView(){
@@ -76,4 +78,5 @@ extension TableViewController {
         }
     }
 }
+
 
