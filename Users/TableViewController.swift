@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
+class TableViewController: UITableViewController,PassingUser {
     
     var users = [User](){
         didSet{
@@ -17,10 +17,14 @@ class TableViewController: UITableViewController {
             }
         }
     }
+    func passUser(user: User) {
+        self.users.append(user)
+        self.tableView.reloadData()
+    }
     
     @objc func goToSecondScreen(){
         let sampleScreen = SampleScreen()
-        //sampleScreen.view.layoutIfNeeded()
+        sampleScreen.delegate = self
         self.navigationController?.present(sampleScreen, animated: true)
         view.snapshotView(afterScreenUpdates: true)
     }

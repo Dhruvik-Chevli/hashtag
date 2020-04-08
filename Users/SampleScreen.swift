@@ -7,6 +7,11 @@
 //
 
 import UIKit
+
+protocol PassingUser{
+    func passUser(user:User)
+}
+
 fileprivate func setUpTextField(_ textField: UITextField,placeHolder: String) {
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = placeHolder
@@ -25,17 +30,21 @@ fileprivate func setUpTextField(_ textField: UITextField,placeHolder: String) {
     textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
 }
 
-
 class SampleScreen: UIViewController {
-    enum SubmitError:Error {
-        case fieldsCannotBeNull
-    }
+    
+    var delegate: PassingUser?
+    
     var titleLabel:UILabel = {
         let titles = UILabel()
         titles.text = "Add Users"
         titles.translatesAutoresizingMaskIntoConstraints = false
         titles.font = UIFont(name: "Helvetica-Bold", size: 30)
         return titles
+    }()
+    var idTF: UITextField = {
+        let textField=UITextField()
+        setUpTextField(textField, placeHolder: "Id")
+        return textField
     }()
     var nameTextField:UITextField = {
          let textField = UITextField()
@@ -47,19 +56,9 @@ class SampleScreen: UIViewController {
         setUpTextField(textField, placeHolder: "Username")
         return textField
     }()
-    var idTF: UITextField = {
-        let textField=UITextField()
-        setUpTextField(textField, placeHolder: "Id")
-        return textField
-    }()
     var adrTF: UITextField = {
         let textField=UITextField()
         setUpTextField(textField, placeHolder: "Address")
-        return textField
-    }()
-    var phoneTF: UITextField = {
-        let textField=UITextField()
-        setUpTextField(textField, placeHolder: "Contact Number")
         return textField
     }()
     var websiteTF: UITextField = {
@@ -73,52 +72,52 @@ class SampleScreen: UIViewController {
         return textField
     }()
     var submit: UIButton = {
-        let button=UIButton(type: .system)
-        button.setTitle("Add User", for: .normal)
-        button.tintColor = .white
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 5
-        button.addTarget(self, action: #selector(addUser), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+           let button=UIButton(type: .system)
+           button.setTitle("Add User", for: .normal)
+           button.tintColor = .white
+           button.backgroundColor = .systemBlue
+           button.layer.cornerRadius = 5
+           button.addTarget(self, action: #selector(addUser), for: .touchUpInside)
+           button.translatesAutoresizingMaskIntoConstraints = false
+           return button
+       }()
+    func isStringContainsOnlyNumbers(string: String) -> Bool {
+        return string.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
+    }
+    enum SubmitError:Error{
+        case fieldsCannotBeNull
+    }
     @objc fileprivate func addUser()
     {
-         do{
-                   let name = nameTextField.text
-                   let username = usernameTF.text
-                   let city = adrTF.text
-                   let company = companyTF.text
-                   let phone = phoneTF.text
-                   let website = websiteTF.text
-                   let id = Int(idTF.text!)
-                   
-                   if(id==nil || name==nil || username==nil || city==nil || website==nil || phone==nil || company==nil || name=="" || username=="" || city==""||website=="" || phone==""||company=="")
-                   {
-                       throw SubmitError.fieldsCannotBeNull
-                   }
-                   
-                   let address=Address(city:city!)
-                   let companys=Company(name: company!)
-            let user=User(id: id!, name: name!, username: username!, website: website!, address: address, company: companys)
-                   //userList.listOfUsers?.insert(user, at: userList.listOfUsers?.endIndex ?? 0)
-                   //isUpdated = 1
-                   //let notif = Notification.Name(rawValue: isUpdated)
-                   nameTextField.text=""
-                   adrTF.text=""
-                   phoneTF.text=""
-                   companyTF.text=""
-                   websiteTF.text=""
-                   usernameTF.text=""
-                   idTF.text=""
+        do{
+            guard let name = nameTextField.text,
+            let username = usernameTF.text,
+            let city = adrTF.text,
+            let company = companyTF.text,
+            let website = websiteTF.text,
+            let id = Int(idTF.text ?? "")
+            else {
+                throw SubmitError.fieldsCannotBeNull
+            }
+
+            let address=Address(city:city)
+            let companys=Company(name: company)
+            let user=User(id: id, name: name, username: username, website: website, address: address, company: companys)
+            print(user)
+            delegate?.passUser(user: user)
+            dismiss(animated: true, completion: nil)
+            nameTextField.text=""
+            adrTF.text=""
+            companyTF.text=""
+            websiteTF.text=""
+            usernameTF.text=""
+            idTF.text=""
             }
         catch {
-            let alert = UIAlertController(title: "Fill the formly correctly", message: "Not all the fields are correctly filled", preferredStyle: .actionSheet)
-            alert.view.layoutIfNeeded()
-
-            alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-                        self.present(alert, animated: true)
+                print(error)
+            //we can use an Alert Controller here to make a pop up with an appropriate message
         }
+        
     }
     fileprivate func setUpTF(_ tf:UITextField)
     {
@@ -145,10 +144,7 @@ class SampleScreen: UIViewController {
         adrTF.topAnchor.constraint(equalTo: usernameTF.bottomAnchor, constant: 20).isActive = true
         setUpTF(adrTF)
         
-        phoneTF.topAnchor.constraint(equalTo: adrTF.bottomAnchor, constant: 20).isActive = true
-        setUpTF(phoneTF)
-        
-        websiteTF.topAnchor.constraint(equalTo: phoneTF.bottomAnchor, constant: 20).isActive = true
+        websiteTF.topAnchor.constraint(equalTo: adrTF.bottomAnchor, constant: 20).isActive = true
         setUpTF(websiteTF)
         
         companyTF.topAnchor.constraint(equalTo: websiteTF.bottomAnchor, constant: 20).isActive = true
@@ -159,7 +155,6 @@ class SampleScreen: UIViewController {
         submit.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         submit.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.systemGroupedBackground
@@ -167,14 +162,12 @@ class SampleScreen: UIViewController {
         view.addSubview(usernameTF)
         view.addSubview(idTF)
         view.addSubview(adrTF)
-        view.addSubview(phoneTF)
         view.addSubview(websiteTF)
         view.addSubview(companyTF)
         view.addSubview(titleLabel)
         view.addSubview(submit)
         setUpView()
-        view.snapshotView(afterScreenUpdates: true)
-
     }
 }
+
 
